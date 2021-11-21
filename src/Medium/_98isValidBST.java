@@ -164,6 +164,32 @@ public class _98isValidBST {
 
 
     }
+
+    /** 109. 有序链表转换二叉搜索树*/
+    public static TreeNode sortedListToBST(ListNode head) {
+        if(head == null){
+            return null;
+        }else if(head.next == null){
+            return new TreeNode(head.val);
+        }
+        ListNode fast = head;
+        ListNode slow = head;
+        // 记录一下最中间节点的前驱结点
+        ListNode pre = slow;
+        while(fast != null && fast.next != null){
+            fast = fast.next.next;
+            pre = slow;
+            slow = slow.next;
+        }
+        TreeNode root = new TreeNode(slow.val);
+        root.right = sortedListToBST(slow.next);
+        // 断开链表，slow这个节点已经用过了，前后都需要断开
+        slow.next = null;
+        pre.next = null;
+        root.left = sortedListToBST(head);
+        return root;
+    }
+
 }
 
 //Definition for a binary tree node.
@@ -219,4 +245,13 @@ class BinaryTree98{
             System.out.println("二叉树为空，无法遍历");
         }
     }
+}
+
+//Definition for singly-linked list.
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode() {}
+    ListNode(int val) { this.val = val; }
+    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
 }
