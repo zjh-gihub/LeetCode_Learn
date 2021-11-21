@@ -1,5 +1,4 @@
-package Tests.LeetCode.easy;
-
+package Easy;
 
 
 import org.omg.PortableInterceptor.INACTIVE;
