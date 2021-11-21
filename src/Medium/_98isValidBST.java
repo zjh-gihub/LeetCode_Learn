@@ -27,6 +27,19 @@ public class _98isValidBST {
 
         b1.setRoot(t0);
 
+        //创建链表
+        SingleLink sl = new SingleLink();
+        ListNode her1 = new ListNode(1);
+        ListNode her2 = new ListNode(2);
+        ListNode her3 = new ListNode(3);
+        ListNode her4 = new ListNode(4);
+        ListNode her6 = new ListNode(6);
+        //添加至链表
+        sl.add(her1);
+        sl.add(her4);
+        sl.add(her6);
+        sl.add(her2);
+        sl.add(her3);
         //中序遍历
         b1.infixOrder();
 
@@ -39,10 +52,18 @@ public class _98isValidBST {
         System.out.println("-----二叉树的层序遍历-----");
         List<List<Integer>> lists = levelOrder(b1.getRoot());
 
+        //103. 二叉树的锯齿形层序遍历
         List<List<Integer>> lists1 = zigzagLevelOrder(b1.getRoot());
 
-
+        //107. 二叉树的层序遍历 II
         levelOrderBottom(b1.getRoot());
+
+        //109. 有序链表转换二叉搜索树
+        System.out.println("------有序链表转换二叉搜索树--------");
+        TreeNode trootNode = sortedListToBST(sl.getHead());
+        sl.showlist();
+        trootNode.inprilist();
+
     }
 
     /**98. 验证二叉搜索树*/
@@ -254,4 +275,65 @@ class ListNode {
     ListNode() {}
     ListNode(int val) { this.val = val; }
     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+}
+
+class SingleLink {
+    //先初始化一个头节点, 头节点不要动, 不存放具体的数据
+    private ListNode head = new ListNode(0);
+
+    //返回头结点
+    public ListNode getHead() {
+        return head;
+    }
+
+
+    //添加节点到单向链表
+    //思路，当不考虑编号顺序时
+    //1. 找到当前链表的最后节点
+    //2. 将最后这个节点的next 指向 新的节点
+    public void add(ListNode headnode) {
+        ListNode temp = head;
+        boolean flag = false;// flag标志添加的编号是否存在，默认为false
+
+        while (true) {
+            if (temp.next == null) {
+                break;
+            } else if (temp.next.val > headnode.val) {
+                break;
+            } else if (temp.next.val == headnode.val) {
+                //说明编号存在
+                flag = true;
+                break;
+            }
+
+            temp = temp.next;
+
+        }
+
+        //判断flag 的值
+        if (flag) {
+            System.out.printf("链表中已经含有 %d 号元素，不可重复添加！\n", headnode.val);
+        } else {
+            headnode.next = temp.next;
+            temp.next = headnode;
+        }
+    }
+
+    //显示链表
+    public void showlist() {
+        //判断是否为空
+        if (head.next == null) {
+            System.out.println("链表为空");
+            return;
+        }
+        ListNode temp = head.next;
+
+        while (true) {
+            if (temp == null) {
+                break;
+            }
+            System.out.println(temp);
+            temp = temp.next;
+        }
+    }
 }
