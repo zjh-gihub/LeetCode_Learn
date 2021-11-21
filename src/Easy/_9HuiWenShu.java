@@ -1,4 +1,4 @@
-package Tests.LeetCode.easy;
+package Easy;
 
 
 /**
